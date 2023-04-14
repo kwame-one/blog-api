@@ -1,21 +1,21 @@
 const PostService = require('../services/post.service') //import post service here
 
 class PostController {
-    static store(req, res) {
+    static async store(req, res) {
         const body = req.body; // retrieve request body / data
         body.image = req.file.filename
-        const post = PostService.store(body); //call post service
+        const post = await PostService.store(body); //call post service
         res.status(201).json(post)
     }
 
-    static findAll(req, res) {
-        const posts =  PostService.findAll();
+    static async findAll(req, res) {
+        const posts =  await PostService.findAll();
         res.json(posts);
     }
 
-    static find(req, res) {
+    static async find(req, res) {
         const slug = req.params.slug;
-        const post = PostService.find(slug)
+        const post = await PostService.find(slug)
         if(!post) {
             return res.status(404).json({message: 'post not found'})
         }

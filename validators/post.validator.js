@@ -7,7 +7,7 @@ const storeRules = [
         .isLength({ min: 5 }).withMessage('title must be at least 5 characters').bail()
         .custom((val) => {
             const result = PostRepository.findByTitle(val)
-            if (result !== -1) {
+            if (result) {
                 throw new Error()
             }
 

@@ -4,24 +4,29 @@ const crypto = require('crypto');
 
 class PostService {
 
-    static store(data) {
-        const uuid = crypto.randomUUID();
+    static async store(data) {
         const slug = data['title'].split(' ').join('-')
-        data['uuid'] = uuid;
         data['slug'] = slug.toLowerCase();
 
-        const post = PostRepository.store(data);
+        const post = await PostRepository.store(data);
         post.image = process.env.APP_URL + '/uploads/posts/'+ post.image;
         return post;
     }
 
-    static findAll() {
-        const posts = PostRepository.findAll();
-        return posts;
+    static async findAll() {
+        const posts = await PostRepository.findAll();
+        return posts.map(post => {
+            post.image = process.env.APP_URL + '/uploads/posts/'+ post.image;
+            return post;
+        });
     }
 
-    static find(slug) {
-        const post = PostRepository.find(slug);
+    static async find(slug) {
+        const post = await PostRepository.find(slug);
+        if(!post) {
+            return false;
+        }
+        post.image = process.env.APP_URL + '/uploads/posts/'+ post.image;
         return post;
     }
 

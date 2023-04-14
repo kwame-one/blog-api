@@ -1,18 +1,20 @@
 
+const Post = require('../models/post.model')
 const posts = [];
 
+
 class PostRepository {
-    static store(data) {
-        posts.push(data);
-        return posts.find(post => post.uuid === data.uuid);
+    static async store(data) {
+        const post = await Post.create({...data});
+        return post;
     }
 
-    static findAll() {
-        return posts;
+    static async findAll() {
+        return await Post.find();
     }
 
-    static find(slug) {
-        const post = posts.find(item => item.slug === slug);
+    static async find(slug) {
+        const post = await Post.findOne({slug})
         return post;
     }
 
@@ -36,8 +38,8 @@ class PostRepository {
     }
 
     static findByTitle(title) {
-        const index = posts.findIndex(item => item.title === title)
-        return index;
+        const post = Post.findOne({title: title})
+        return post;
     }
 }
 
