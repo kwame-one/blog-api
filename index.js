@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./routes/api')
 const methodOverride = require('method-override')
-
+const dbConnect = require('./configs/db')
+require('dotenv').config()
 const app = express(); 
 const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({extended: false})
@@ -21,8 +22,11 @@ app.use(methodOverride(function (req, res) {
     }
 }))
 
-
 routes(app)
+
+dbConnect()
+.then(() => console.log('connected to db'))
+.catch(_ => console.log('error connecting to db '))
 
 app.listen(3001, () => {
     console.log('app started')

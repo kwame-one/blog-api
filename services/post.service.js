@@ -1,6 +1,6 @@
 const PostRepository = require('../respositories/post.repository')
 const crypto = require('crypto');
-const config = require('../configs/app')
+// const config = require('../configs/app')
 
 class PostService {
 
@@ -11,7 +11,7 @@ class PostService {
         data['slug'] = slug.toLowerCase();
 
         const post = PostRepository.store(data);
-        post.image = config.APP_URL + '/uploads/posts/'+ post.image;
+        post.image = process.env.APP_URL + '/uploads/posts/'+ post.image;
         return post;
     }
 
