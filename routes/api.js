@@ -1,9 +1,13 @@
 const PostController = require('../controllers/post.controller')
 const Validator = require('../validators/validator')
 const PostValidator = require('../validators/post.validator')
+const PostImageUploader = require('../uploaders/post-image.uploader')
 
 const routes = (app) => {
-    app.post('/posts', Validator.validate(PostValidator.storeRules), PostController.store);
+    app.post('/posts', 
+        PostImageUploader('public/uploads/posts').single('image'), 
+        Validator.validate(PostValidator.storeRules), 
+        PostController.store);
     app.get('/posts', PostController.findAll);
     app.get('/posts/:slug', PostController.find);
     app.delete('/posts/:uuid', PostController.delete);

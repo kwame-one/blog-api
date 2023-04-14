@@ -3,6 +3,7 @@ const PostService = require('../services/post.service') //import post service he
 class PostController {
     static store(req, res) {
         const body = req.body; // retrieve request body / data
+        body.image = req.file.filename
         const post = PostService.store(body); //call post service
         res.status(201).json(post)
     }

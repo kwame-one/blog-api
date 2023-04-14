@@ -1,31 +1,29 @@
 const PostRepository = require('../respositories/post.repository')
 const crypto = require('crypto');
-const config = require('../configs/app')
 
-class PostService {
+const PostService =  {
 
-    static store(data) {
+    store: function (data) {
         const uuid = crypto.randomUUID();
         const slug = data['title'].split(' ').join('-')
         data['uuid'] = uuid;
         data['slug'] = slug.toLowerCase();
 
         const post = PostRepository.store(data);
-        post.image = config.APP_URL + '/uploads/posts/'+ post.image;
         return post;
-    }
+    },
 
-    static findAll() {
+    findAll: () => {
         const posts = PostRepository.findAll();
         return posts;
-    }
+    },
 
-    static find(slug) {
+    find: (slug) => {
         const post = PostRepository.find(slug);
         return post;
-    }
+    },
 
-    static delete(uuid) {
+    delete: function(uuid) {
         const postIndex = PostRepository.findIndex(uuid);
         if (postIndex === -1) {
             //post not found
@@ -33,9 +31,9 @@ class PostService {
         }
         PostRepository.delete(postIndex)
         return true;
-    }
+    },
 
-    static update(uuid, data) {
+    update: function(uuid, data) {
         const postIndex = PostRepository.findIndex(uuid);
         if(postIndex === -1) {
             return false;
