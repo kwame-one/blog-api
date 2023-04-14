@@ -11,7 +11,7 @@ npm install
 ````dotenv
 APP_URL=
 DB_URL=
-```
+````
 
 5. run the command below in the root directory to start the app
 ```shell
