@@ -7,3 +7,13 @@
 ```shell
 npm install
 ```
+4. Create a copy of the .env.example file and save it as .env and set the values for the following
+````dotenv
+APP_URL=
+DB_URL=
+```
+
+5. run the command below in the root directory to start the app
+```shell
+node index
+```
